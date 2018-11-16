@@ -3,17 +3,35 @@ namespace app\components;
 
 use yii\base\InvalidParamException;
 /*
-класс позволяет контролировать отклонение текущей цены t0 от предыдущей t1. 
+* Class PriceComparer = позволяет контролировать отклонение текущей цены t0 от предыдущей t1. 
+* @package app\components\PriceComparer 
+*
+*  @property $dt int = допустимое отклонение цены 
+*  @property $t0 int = текущая цена 
+*  @property $t1 int = предыдущая цена
+*  @property $dtres int = отклонение цены $t0 от цены $t1
 */
 class PriceComparer extends \yii\base\BaseObject 
 {
-	/* допустимое отклонение */
+	/* 
+	* допустимое отклонение 
+	* @var int
+	*/
 	public $dt;
-	/* текущая цена*/
+	/* 
+	* текущая цена 
+	* @var int
+	*/
 	public $t0;
-	/* предыдущая цена */
+	/* 
+	* предыдущая цена 
+	*  @var int
+	*/
 	public $t1;
-	/* вычисленное отклонение = результат */
+	/* 
+	* вычисленное отклонение = результат 
+	* @var int
+	*/
 	private $_dtres;
 		
 	public function init() 
