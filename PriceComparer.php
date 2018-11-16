@@ -35,7 +35,7 @@ class PriceComparer extends \yii\base\BaseObject
 		if (empty($this->t0))
 			throw new InvalidParamException('Неверная цена ');
 		// вычислям отклонение ... 
-		$this->_dtres= abs($this->t0-$this->t1)/$this->t0*100;
+		$this->_dtres= abs($this->t0-$this->t1)/$this->t1*100;
 		return $this->_dtres<$this->dt;
 	}
 	/* возвращаем результат вычислений .. */
