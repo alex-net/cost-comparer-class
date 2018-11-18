@@ -15,6 +15,7 @@ use yii\base\InvalidParamException;
  * @property $dtres int = отклонение цены $t0 от цены $t1
  * 
  * @method float getAmount() = возвращает рассчётное отклонение 
+ * @method void setCurrentPrice(int) задаёт значение для $t0 со сдвигом $t0 в $t1
  * */
 
 

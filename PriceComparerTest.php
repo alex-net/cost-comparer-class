@@ -50,8 +50,6 @@ class PriceComparerTest extends \PHPUnit\Framework\TestCase
 		$v=new PriceComparer(['dt'=>$dt,'t0'=>$t0,'t1'=>$t1]);
 		$this->assertEquals($diff,$v->diff());
 		$this->assertEquals($am,$v->amount);
-
-
 	}
 
 	/**
@@ -66,5 +64,17 @@ class PriceComparerTest extends \PHPUnit\Framework\TestCase
 			[40,149,96,false,55.208],
 			[40,149,140,true,6.429],
 		];
+	}
+
+	/**
+	 * проверка обновления цены
+	 * @dataProvider diffTestorDataProvider
+	 * */
+	public function testT0Update($dt,$t0,$t1,$diff,$am)
+	{
+		$v=new PriceComparer(['dt'=>$dt,'t0'=>$t1]);
+		$v->currentPrice=$t0;
+		$this->assertEquals($v->t1,$t1);
+		$this->assertEquals($v->t0,$t0);
 	}
 }
