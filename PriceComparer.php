@@ -1,37 +1,41 @@
-<?php 
-namespace app\components;
+<?php
+namespace tests;
+require 'yii2-app-basic/vendor/autoload.php';
+require  'yii2-app-basic/vendor/yiisoft/yii2/Yii.php';
 
 use yii\base\InvalidParamException;
-/*
-* Class PriceComparer = позволяет контролировать отклонение текущей цены t0 от предыдущей t1. 
-* @package app\components\PriceComparer 
-*
-*  @property $dt int = допустимое отклонение цены 
-*  @property $t0 int = текущая цена 
-*  @property $t1 int = предыдущая цена
-*  @property $dtres int = отклонение цены $t0 от цены $t1
-*/
+/**
+ * Class PriceComparer = позволяет контролировать отклонение текущей цены t0 от предыдущей t1.  
+ * 
+ * @package tests\PriceComparer  
+ * 
+ * @property $dt int = допустимое отклонение цены 
+ * @property $t0 int = текущая цена 
+ * @property $t1 int = предыдущая цена
+ * @property $dtres int = отклонение цены $t0 от цены $t1
+ * 
+ * @method float getAmount() = возвращает рассчётное отклонение 
+ * */
+
+
 class PriceComparer extends \yii\base\BaseObject 
 {
-	/* 
-	* допустимое отклонение 
-	* @var int
-	*/
+	/**
+	 *	@var int  $dt допустимое отклонение 
+	 * */
 	public $dt;
-	/* 
-	* текущая цена 
-	* @var int
-	*/
+	/**
+	 *  @var int $t0 текущая цена
+	 * */
 	public $t0;
-	/* 
-	* предыдущая цена 
-	*  @var int
-	*/
+	/**
+	 *  @var int $t1 предыдущая цена
+	 * */
 	public $t1;
-	/* 
-	* вычисленное отклонение = результат 
-	* @var int
-	*/
+	/** 
+	 * @var int $_dtres вычисленное отклонение = результат 
+	 * @access private
+	 * */
 	private $_dtres;
 		
 	public function init() 
@@ -41,13 +45,17 @@ class PriceComparer extends \yii\base\BaseObject
 			throw new InvalidParamException('Пропущен обязательный параметр dt');
 		if (!isset($this->t0))
 			throw new InvalidParamException('Пропущен обязательный параметр t0');
-		if (empty$this->t0))
+		if (empty($this->t0))
 			throw new InvalidParamException('цена t0 не может быть равна 0');
 				
 		if (!isset($this->t1))
 			$this->t1=$this->t0;
 	}
-	/* рассчитывает отклонение ... между ценами t1 и t0 и возвращает true, если рассчётное отклонение не превышает допустимое   */
+	/**
+	 * рассчитывает отклонение ... между ценами t1 и t0 
+	 * 
+	 * @return boolean true, если рассчётное отклонение не превышает допустимое
+	 * */
 	public function diff ()
 	{
 		if (empty($this->t0))
@@ -56,12 +64,23 @@ class PriceComparer extends \yii\base\BaseObject
 		$this->_dtres= abs($this->t0-$this->t1)/$this->t1*100;
 		return $this->_dtres<$this->dt;
 	}
-	/* возвращаем результат вычислений .. */
+	/**
+	 * возвращаем результат вычислений
+	 * 
+	 * @return float расчётное отклонение 
+	 * */ 
 	public function getAmount ()
 	{
-		return $this->_dtres;
+		return round($this->_dtres,3);
 	}
-	/* забрасываем новую текущую цену ..  с перестановкой цен */
+	/**
+	 * Обновляет текущую цену со сдвигом цен 
+	 * 
+	 * Текущая цена становится на место предыдущей, а новое значение становится текущей ценой
+	 * 
+	 * @param int ноая цена .. 
+	 * @return void
+	 * */
 	public function setCurrentPrice($t0)
 	{
 		if (empty($t0))
